@@ -12,7 +12,7 @@ import kotlinx.coroutines.withContext
 class PLBBActivity : BaseActivity() {
     private lateinit var binding: ActMarkBinding
 
-    private val adapter: MarkAdapter = MarkAdapter()
+    private val adapter: MHAdapter = MHAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

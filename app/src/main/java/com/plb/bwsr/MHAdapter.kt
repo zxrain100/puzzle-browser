@@ -12,7 +12,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.plb.bwsr.d.Info
 import com.plb.bwsr.databinding.ListItemBinding
 
-class MarkAdapter : ListAdapter<Info,MarkAdapter.ItemHolder>(InfoDiffCallback) {
+class MHAdapter : ListAdapter<Info, MHAdapter.ItemHolder>(InfoDiffCallback) {
 
     class ItemHolder(val binding: ListItemBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -31,7 +31,12 @@ class MarkAdapter : ListAdapter<Info,MarkAdapter.ItemHolder>(InfoDiffCallback) {
         } else {
             "http://$host/favicon.ico"
         }
-        Glide.with(bind.root.context).load(iconUrl).apply(RequestOptions.bitmapTransform(CircleCrop())).into(bind.img)
+        Glide.with(bind.root.context)
+            .load(iconUrl)
+            .error(R.drawable.sh_item_def)
+            .placeholder(R.drawable.sh_item_def)
+            .apply(RequestOptions.bitmapTransform(CircleCrop()))
+            .into(bind.img)
         bind.title.text = item.title
         bind.host.text = Uri.parse(item.url).host
 
