@@ -28,12 +28,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:drawableTop="@mipmap/facebook"
             android:drawablePadding="8dp"
             android:gravity="center"
-            android:text="Facebook"
+            android:text="@string/facebook"
             android:textColor="@color/white"
-            android:textSize="13sp" />
+            android:textSize="13sp"
+            app:drawableTopCompat="@mipmap/facebook" />
 
         <TextView
             android:id="@+id/itemInstagram"
@@ -41,12 +41,12 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_weight="1"
-            android:drawableTop="@mipmap/instagram"
             android:drawablePadding="8dp"
             android:gravity="center"
-            android:text="Instagram"
+            android:text="@string/instagram"
             android:textColor="@color/white"
-            android:textSize="13sp" />
+            android:textSize="13sp"
+            app:drawableTopCompat="@mipmap/instagram" />
 
         <TextView
             android:id="@+id/itemYahoo"
@@ -54,12 +54,12 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_weight="1"
-            android:drawableTop="@mipmap/yahoo"
             android:drawablePadding="8dp"
             android:gravity="center"
-            android:text="Yahoo"
+            android:text="@string/yahoo"
             android:textColor="@color/white"
-            android:textSize="13sp" />
+            android:textSize="13sp"
+            app:drawableTopCompat="@mipmap/yahoo" />
 
         <TextView
             android:id="@+id/itemTwitter"
@@ -67,12 +67,12 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_weight="1"
-            android:drawableTop="@mipmap/twitter"
             android:drawablePadding="8dp"
             android:gravity="center"
-            android:text="Twitter"
+            android:text="@string/twitter"
             android:textColor="@color/white"
-            android:textSize="13sp" />
+            android:textSize="13sp"
+            app:drawableTopCompat="@mipmap/twitter" />
 
     </LinearLayout>
 
@@ -101,7 +101,8 @@
             android:textColor="@color/white"
             android:textColorHint="@color/white_40"
             android:textSize="14sp"
-            tools:ignore="TextFields" />
+            tools:ignore="TextFields"
+            android:autofillHints="" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/add_mark"

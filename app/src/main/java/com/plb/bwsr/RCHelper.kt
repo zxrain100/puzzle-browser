@@ -1,20 +1,20 @@
 package com.plb.bwsr
 
-import android.annotation.SuppressLint
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 
-object RCHelper {
-    @SuppressLint("StaticFieldLeak")
-    private val instance = FirebaseRemoteConfig.getInstance()
-
-    init {
-        instance.setDefaultsAsync(R.xml.remote_config_default)
+class RCHelper {
+    companion object {
+        val instance: RCHelper by lazy(LazyThreadSafetyMode.SYNCHRONIZED) { RCHelper() }
     }
 
-    fun getPlbCfg() = instance.getString("plb_cfg")
+    private lateinit var config: FirebaseRemoteConfig
 
-    fun fetchAndActivate() {
-        instance.fetchAndActivate()
+    fun getPlbCfg() = config.getString("plb_cfg")
+
+    fun initAndFetchAndActivate() {
+        config = FirebaseRemoteConfig.getInstance()
+        config.setDefaultsAsync(R.xml.remote_config_default)
+        config.fetchAndActivate()
     }
 
 }

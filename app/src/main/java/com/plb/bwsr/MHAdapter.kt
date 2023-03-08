@@ -43,12 +43,20 @@ class MHAdapter : ListAdapter<Info, MHAdapter.ItemHolder>(InfoDiffCallback) {
         bind.pageDelete.setOnClickListener {
             listener?.invoke(position, item)
         }
+        bind.root.setOnClickListener {
+            click?.invoke(position, item)
+        }
     }
 
     private var listener: ((Int, Info) -> Unit)? = null
 
     fun setOnDeleteListener(l: (Int, Info) -> Unit) {
         listener = l
+    }
+
+    private var click: ((Int, Info) -> Unit)? = null
+    fun setOnItemClickListener(c: (Int, Info) -> Unit) {
+        this.click = c
     }
 
 

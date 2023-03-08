@@ -1,8 +1,11 @@
 package com.plb.bwsr
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
 import com.plb.bwsr.co.PLBa
@@ -15,6 +18,8 @@ import kotlinx.coroutines.withContext
 
 class PLBMainActivity : BaseActivity() {
     private lateinit var binding: ActHomeBinding
+
+    private var actLauncher: ActivityResultLauncher<Intent>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,10 +40,10 @@ class PLBMainActivity : BaseActivity() {
             val plba = getHomeInter()
             if (plba != null && AppConfig.instance.isM()) {
                 plba.onClose {
-                    startActivity(Intent(this, PLBHActivity::class.java))
+                    actLauncher?.launch(Intent(this, PLBHActivity::class.java))
                 }.show(this)
             } else {
-                startActivity(Intent(this, PLBHActivity::class.java))
+                actLauncher?.launch(Intent(this, PLBHActivity::class.java))
             }
 
         }
@@ -46,12 +51,25 @@ class PLBMainActivity : BaseActivity() {
             val plba = getHomeInter()
             if (plba != null && AppConfig.instance.isM()) {
                 plba.onClose {
-                    startActivity(Intent(this, PLBBActivity::class.java))
+                    actLauncher?.launch(Intent(this, PLBMActivity::class.java))
                 }.show(this)
             } else {
-                startActivity(Intent(this, PLBBActivity::class.java))
+                actLauncher?.launch(Intent(this, PLBMActivity::class.java))
             }
 
+        }
+
+
+        actLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == Activity.RESULT_OK) {
+                val data = it.data
+                if (data != null) {
+                    val url = data.getStringExtra("url") ?: return@registerForActivityResult
+                    val intent = Intent(this, PLBBroActivity::class.java)
+                    intent.putExtra("url", url)
+                    startActivity(intent)
+                }
+            }
         }
     }
 

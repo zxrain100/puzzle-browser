@@ -52,7 +52,7 @@ class PLB : Application() {
             }
 
         })
-        RCHelper.fetchAndActivate()
+        RCHelper.instance.initAndFetchAndActivate()
     }
 
 

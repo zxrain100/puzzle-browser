@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@mipmap/app_bg"
     android:orientation="vertical"
-    tools:context=".PLBBActivity">
+    tools:context=".PLBMActivity">
 
     <View
         android:id="@+id/statusBar"
@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:textSize="16sp"
             android:textColor="@color/white"
-            android:text="Bookmarks"/>
+            android:text="@string/bookmarks"/>
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView

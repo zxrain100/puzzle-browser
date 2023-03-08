@@ -1,5 +1,6 @@
 package com.plb.bwsr
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.plb.bwsr.d.Info
@@ -9,7 +10,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class PLBBActivity : BaseActivity() {
+class PLBMActivity : BaseActivity() {
     private lateinit var binding: ActMarkBinding
 
     private val adapter: MHAdapter = MHAdapter()
@@ -28,6 +29,12 @@ class PLBBActivity : BaseActivity() {
         adapter.setOnDeleteListener { _, info ->
             deleteData(info)
             loadData()
+        }
+        adapter.setOnItemClickListener { _, info ->
+            val intent = Intent()
+            intent.putExtra("url", info.url)
+            setResult(RESULT_OK, intent)
+            finish()
         }
 
         loadData()

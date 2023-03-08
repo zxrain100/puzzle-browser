@@ -1,5 +1,6 @@
 package com.plb.bwsr
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.plb.bwsr.d.Info
@@ -28,6 +29,12 @@ class PLBHActivity : BaseActivity() {
             loadData()
         }
 
+        adapter.setOnItemClickListener { _, info ->
+            val intent = Intent()
+            intent.putExtra("url", info.url)
+            setResult(RESULT_OK, intent)
+            finish()
+        }
         loadData()
     }
 

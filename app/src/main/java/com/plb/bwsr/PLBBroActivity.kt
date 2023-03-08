@@ -1,11 +1,14 @@
 package com.plb.bwsr
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
 import com.plb.bwsr.co.PLBa
@@ -25,6 +28,8 @@ class PLBBroActivity : BaseActivity(), WebCallback, View.OnClickListener {
     private var ad: PLBa? = null
     private var loadingType = 0  //0:未加载，1：加载中
 
+    private var actLauncher: ActivityResultLauncher<Intent>? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActBrowserBinding.inflate(layoutInflater)
@@ -36,6 +41,19 @@ class PLBBroActivity : BaseActivity(), WebCallback, View.OnClickListener {
         webHelper.initWebView(binding.webView)
 
         initListener()
+
+        actLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == Activity.RESULT_OK) {
+                val data = it.data
+                if (data != null) {
+                    val url = data.getStringExtra("url") ?: return@registerForActivityResult
+                    startLoad(url)
+                }
+            }
+        }
+
+        val url = intent.getStringExtra("url") ?: return
+        startLoad(url)
     }
 
 
@@ -199,8 +217,8 @@ class PLBBroActivity : BaseActivity(), WebCallback, View.OnClickListener {
                 }
             }
             binding.home -> showHome()
-            binding.mark -> startActivity(Intent(this, PLBBActivity::class.java))
-            binding.history -> startActivity(Intent(this, PLBHActivity::class.java))
+            binding.mark -> actLauncher?.launch(Intent(this, PLBMActivity::class.java))
+            binding.history -> actLauncher?.launch(Intent(this, PLBHActivity::class.java))
 
         }
 

@@ -11,6 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PuzzleBrowser"
+        android:networkSecurityConfig="@xml/network_config"
         tools:targetApi="33">
         <activity
             android:name=".PLBSActivity"
@@ -30,7 +31,7 @@
             android:exported="false"/>
         <activity android:name=".PLBHActivity"
             android:exported="false"/>
-        <activity android:name=".PLBBActivity"
+        <activity android:name=".PLBMActivity"
             android:exported="false"/>
 
 

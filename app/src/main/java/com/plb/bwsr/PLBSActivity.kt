@@ -17,17 +17,24 @@ class PLBSActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        initBind()
+        binding = ActStartBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         isBack = intent.getBooleanExtra("back", false)
         start()
-        anim()
     }
 
 
     private fun start() {
+        anim = ValueAnimator.ofInt(0, 90)
+        anim?.duration = 9 * 1000L
+        anim?.addUpdateListener {
+            binding.loadBar.progress = it.animatedValue as Int
+        }
+        anim?.start()
+
         launch {
-            withTimeoutOrNull(15000) {
+            withTimeoutOrNull(10100) {
                 PLBam.instance.creates(PLBap.INDEX, PLBap.HOME, PLBap.NATIVE)
             }
             withContext(Dispatchers.Main) {
@@ -49,20 +56,6 @@ class PLBSActivity : BaseActivity() {
                 }
             }
         }
-    }
-
-    private fun initBind() {
-        binding = ActStartBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-    }
-
-    private fun anim() {
-        anim = ValueAnimator.ofInt(0, 90)
-        anim?.duration = 9 * 1000L
-        anim?.addUpdateListener {
-            binding.loadBar.progress = it.animatedValue as Int
-        }
-        anim?.start()
     }
 
     private fun showAd() {

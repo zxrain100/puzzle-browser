@@ -41,10 +41,10 @@ object PLBap {
 
     fun getRequestLists(sk: String): List<PLBau> {
         try {
-            val s = RCHelper.getPlbCfg()
+            val s = RCHelper.instance.getPlbCfg()
             val json = JSONObject(String(Base64.decode(s.toByteArray(), Base64.DEFAULT)))
-            val mode = json.getBoolean("plb_mode")
-            AppConfig.instance.setSafeMode(mode)
+//            val mode = json.getBoolean("plb_mode")
+//            AppConfig.instance.setSafeMode(mode)
             val jsonArray = json.getJSONArray("plb_config")
 
             val adReqList = mutableListOf<PLBau>()
