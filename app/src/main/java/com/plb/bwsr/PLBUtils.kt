@@ -1,5 +1,7 @@
 package com.plb.bwsr
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.util.TypedValue
 
 object PLBUtils {
@@ -16,5 +18,20 @@ object PLBUtils {
         PLB.context.resources.displayMetrics
     ).toInt()
 
+
+    @SuppressLint("DiscouragedApi", "InternalInsetResource")
+    fun getStatusBarH(context: Context): Int {
+        var result = 0
+        val resourceId = context.resources.getIdentifier("status_bar_height", "dimen", "android")
+        if (resourceId > 0) {
+            result = runCatching { context.resources.getDimensionPixelSize(resourceId) }.getOrDefault(0)
+        }
+
+        if (result == 0) {
+            result = PLBUtils.dip2px(24)
+        }
+
+        return result
+    }
 
 }

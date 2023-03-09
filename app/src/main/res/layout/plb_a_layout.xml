@@ -25,7 +25,8 @@
                 android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                tools:ignore="ContentDescription" />
+                tools:ignore="ContentDescription"
+                android:src="@mipmap/ad_attr"/>
             <FrameLayout
                 android:id="@+id/big_pic"
                 android:layout_width="match_parent"

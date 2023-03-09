@@ -90,6 +90,7 @@
             android:id="@+id/input_url"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:autofillHints=""
             android:background="@drawable/url_et_bg"
             android:hint="@string/search_or_enter_an_address"
             android:imeOptions="actionSearch"
@@ -101,8 +102,7 @@
             android:textColor="@color/white"
             android:textColorHint="@color/white_40"
             android:textSize="14sp"
-            tools:ignore="TextFields"
-            android:autofillHints="" />
+            tools:ignore="TextFields" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/add_mark"
@@ -164,9 +164,9 @@
             android:id="@+id/homePage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:layout_alignParentBottom="true"
             android:layout_marginBottom="39dp">
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -199,11 +199,12 @@
             android:layout_weight="1">
 
             <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/preImg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:scaleType="fitCenter"
-                app:srcCompat="@mipmap/pre" />
+                app:srcCompat="@mipmap/pre_1" />
         </FrameLayout>
 
         <FrameLayout
@@ -213,11 +214,12 @@
             android:layout_weight="1">
 
             <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/nextImg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:scaleType="fitCenter"
-                app:srcCompat="@mipmap/next" />
+                app:srcCompat="@mipmap/next_1" />
         </FrameLayout>
 
         <FrameLayout

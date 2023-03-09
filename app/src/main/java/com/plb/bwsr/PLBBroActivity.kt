@@ -32,15 +32,46 @@ class PLBBroActivity : BaseActivity(), WebCallback, View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        initView()
+        initListener()
+
+        val url = intent.getStringExtra("url") ?: return
+        startLoad(url)
+    }
+
+    private fun initView() {
         binding = ActBrowserBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         binding.statusBar.setStatusBar()
-
         webHelper = WebHelper(this)
         webHelper.initWebView(binding.webView)
+    }
 
-        initListener()
+    private fun initListener() {
+        arrayListOf(
+            binding.addMark,
+            binding.search,
+            binding.itemFacebook,
+            binding.itemInstagram,
+            binding.itemYahoo,
+            binding.itemTwitter,
+            binding.next,
+            binding.pre,
+            binding.home,
+            binding.mark,
+            binding.history
+        ).forEach {
+            it.setOnClickListener(this)
+        }
+        binding.inputUrl.setOnEditorActionListener(TextView.OnEditorActionListener { v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                //Toast.makeText(activity, "开始搜索", Toast.LENGTH_SHORT).show()
+                startLoad(v.text.toString())
+                return@OnEditorActionListener true
+            }
+            false
+        })
 
         actLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == Activity.RESULT_OK) {
@@ -50,38 +81,6 @@ class PLBBroActivity : BaseActivity(), WebCallback, View.OnClickListener {
                     startLoad(url)
                 }
             }
-        }
-
-        val url = intent.getStringExtra("url") ?: return
-        startLoad(url)
-    }
-
-
-    private fun initListener() {
-        binding.apply {
-            addMark.setOnClickListener(this@PLBBroActivity)
-            search.setOnClickListener(this@PLBBroActivity)
-
-            itemFacebook.setOnClickListener(this@PLBBroActivity)
-            itemInstagram.setOnClickListener(this@PLBBroActivity)
-            itemYahoo.setOnClickListener(this@PLBBroActivity)
-            itemTwitter.setOnClickListener(this@PLBBroActivity)
-
-            next.setOnClickListener(this@PLBBroActivity)
-            pre.setOnClickListener(this@PLBBroActivity)
-            home.setOnClickListener(this@PLBBroActivity)
-            mark.setOnClickListener(this@PLBBroActivity)
-            history.setOnClickListener(this@PLBBroActivity)
-
-
-            inputUrl.setOnEditorActionListener(TextView.OnEditorActionListener { v, actionId, event ->
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    //Toast.makeText(activity, "开始搜索", Toast.LENGTH_SHORT).show()
-                    startLoad(v.text.toString())
-                    return@OnEditorActionListener true
-                }
-                false
-            })
         }
     }
 
@@ -118,7 +117,24 @@ class PLBBroActivity : BaseActivity(), WebCallback, View.OnClickListener {
         binding.webPage.isVisible = false
         binding.itemLayout.isVisible = true
         binding.homePage.isVisible = true
+        binding.preImg.setImageResource(R.mipmap.pre_1)
+        binding.nextImg.setImageResource(R.mipmap.next_1)
         loadingType = 0
+    }
+
+
+    private fun updatePreAndNextStatus() {
+        if (binding.webView.canGoBack()) {
+            binding.preImg.setImageResource(R.mipmap.pre)
+        } else {
+            binding.preImg.setImageResource(R.mipmap.pre_1)
+        }
+
+        if (binding.webView.canGoForward()) {
+            binding.nextImg.setImageResource(R.mipmap.next)
+        } else {
+            binding.nextImg.setImageResource(R.mipmap.next_1)
+        }
     }
 
 
@@ -138,14 +154,6 @@ class PLBBroActivity : BaseActivity(), WebCallback, View.OnClickListener {
             binding.search.setImageResource(R.mipmap.search)
             binding.inputUrl.setText("")
         } else {
-            binding.search.setImageResource(R.mipmap.cancel)
-            binding.inputUrl.setText(url)
-        }
-
-        if (url == "about:blank") {
-            binding.search.setImageResource(R.mipmap.search)
-            binding.inputUrl.setText("")
-        } else {
             loadingType = 1
             binding.search.setImageResource(R.mipmap.cancel)
             binding.inputUrl.setText(url)
@@ -159,6 +167,7 @@ class PLBBroActivity : BaseActivity(), WebCallback, View.OnClickListener {
         binding.webProgress.isVisible = false
         loadingType = 0
         binding.search.setImageResource(R.mipmap.search)
+        updatePreAndNextStatus()
     }
 
     override fun onWebProgress(progress: Int) {
@@ -196,6 +205,7 @@ class PLBBroActivity : BaseActivity(), WebCallback, View.OnClickListener {
             binding.itemTwitter -> startLoad("https://www.twitter.com/")
 
             binding.pre -> {
+                updatePreAndNextStatus()
                 if (binding.webPage.visibility == View.VISIBLE) {
                     if (binding.webView.canGoBack()) {
                         val m = binding.webView.copyBackForwardList()
@@ -212,6 +222,7 @@ class PLBBroActivity : BaseActivity(), WebCallback, View.OnClickListener {
                 }
             }
             binding.next -> {
+                updatePreAndNextStatus()
                 if (binding.webView.canGoForward()) {
                     binding.webView.goForward()
                 }

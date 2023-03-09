@@ -1,6 +1,5 @@
 package com.plb.bwsr
 
-import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
@@ -41,31 +40,6 @@ open class BaseActivity : AppCompatActivity(), CoroutineScope by MainScope() {
         isFront = false
     }
 
-    internal fun View.setStatusBar(): Int {
-        val sH = getStatusBarH()
-        val newPaddingTop = paddingTop + sH
-        setPadding(paddingLeft, newPaddingTop, paddingRight, bottom)
-        return layoutParams.apply {
-            height += sH
-        }.apply {
-            layoutParams = this
-        }.run { height }
-    }
-    @SuppressLint("DiscouragedApi", "InternalInsetResource")
-    private fun getStatusBarH():Int{
-        var result = 0
-        val resourceId = resources.getIdentifier("status_bar_height", "dimen", "android")
-        if (resourceId > 0) {
-            result = runCatching { resources.getDimensionPixelSize(resourceId) }.getOrDefault(0)
-        }
-
-        if (result == 0) {
-            result = PLBUtils.dip2px(24)
-        }
-
-        return result
-    }
-
     inline fun View.onGlobalLayout(crossinline callback: () -> Unit) {
         this.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {
@@ -74,4 +48,16 @@ open class BaseActivity : AppCompatActivity(), CoroutineScope by MainScope() {
             }
         })
     }
+
+    internal fun View.setStatusBar(): Int {
+        val sH = PLBUtils.getStatusBarH(this@BaseActivity)
+        val newPaddingTop = paddingTop + sH
+        setPadding(paddingLeft, newPaddingTop, paddingRight, bottom)
+        return layoutParams.apply {
+            height += sH
+        }.apply {
+            layoutParams = this
+        }.run { height }
+    }
+
 }
