@@ -1,6 +1,7 @@
-package com.plb.bwsr
+package com.plb.bwsr.co
 
 import android.content.Context
+import com.plb.bwsr.PLB
 
 class AppConfig{
 

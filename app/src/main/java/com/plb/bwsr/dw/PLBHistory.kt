@@ -1,4 +1,4 @@
-package com.plb.bwsr.d
+package com.plb.bwsr.dw
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

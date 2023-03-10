@@ -1,4 +1,4 @@
-package com.plb.bwsr.h
+package com.plb.bwsr
 
 interface WebCallback {
 

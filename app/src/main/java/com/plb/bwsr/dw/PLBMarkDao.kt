@@ -1,6 +1,7 @@
-package com.plb.bwsr.d
+package com.plb.bwsr.dw
 
 import androidx.room.*
+import com.plb.bwsr.lo.PLBMark
 
 @Dao
 abstract class PLBMarkDao {

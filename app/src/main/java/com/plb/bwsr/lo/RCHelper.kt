@@ -1,6 +1,7 @@
-package com.plb.bwsr
+package com.plb.bwsr.lo
 
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
+import com.plb.bwsr.R
 
 class RCHelper {
     companion object {

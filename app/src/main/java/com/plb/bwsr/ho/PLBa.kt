@@ -1,4 +1,4 @@
-package com.plb.bwsr.co
+package com.plb.bwsr.ho
 
 import android.app.Activity
 import com.google.android.gms.ads.AdError

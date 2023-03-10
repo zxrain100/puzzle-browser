@@ -1,9 +1,13 @@
-package com.plb.bwsr.d
+package com.plb.bwsr.ho
 
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.plb.bwsr.PLB
+import com.plb.bwsr.dw.PLBMarkDao
+import com.plb.bwsr.dw.PLBHistory
+import com.plb.bwsr.lo.PLBMark
+import com.plb.bwsr.po.PLBHistoryDao
 
 @Database(
     entities = [

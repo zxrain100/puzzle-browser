@@ -1,4 +1,4 @@
-package com.plb.bwsr.d
+package com.plb.bwsr.dw
 
 data class Info(
     var url: String,

@@ -1,6 +1,7 @@
-package com.plb.bwsr.d
+package com.plb.bwsr.po
 
 import androidx.room.*
+import com.plb.bwsr.dw.PLBHistory
 
 @Dao
 abstract class PLBHistoryDao {

@@ -1,11 +1,13 @@
-package com.plb.bwsr
+package com.plb.bwsr.co
 
 import android.animation.ValueAnimator
 import android.content.Intent
 import android.os.Bundle
-import com.plb.bwsr.co.PLBam
-import com.plb.bwsr.co.PLBap
+import com.plb.bwsr.dw.BaseActivity
+import com.plb.bwsr.lo.PLBam
+import com.plb.bwsr.dw.PLBap
 import com.plb.bwsr.databinding.ActStartBinding
+import com.plb.bwsr.lo.PLBMainActivity
 import kotlinx.coroutines.*
 
 class PLBSActivity : BaseActivity() {

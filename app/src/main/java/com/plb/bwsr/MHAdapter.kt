@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.request.RequestOptions
-import com.plb.bwsr.d.Info
+import com.plb.bwsr.dw.Info
 import com.plb.bwsr.databinding.ListItemBinding
 
 class MHAdapter : ListAdapter<Info, MHAdapter.ItemHolder>(InfoDiffCallback) {

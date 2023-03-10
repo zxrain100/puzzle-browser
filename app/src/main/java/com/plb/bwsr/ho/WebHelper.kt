@@ -1,4 +1,4 @@
-package com.plb.bwsr.h
+package com.plb.bwsr.ho
 
 import android.content.Context
 import android.content.Intent
@@ -7,9 +7,9 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.util.Patterns
 import android.webkit.*
-import com.plb.bwsr.d.PLBDBManager
-import com.plb.bwsr.d.PLBHistory
-import com.plb.bwsr.d.PLBMark
+import com.plb.bwsr.WebCallback
+import com.plb.bwsr.dw.PLBHistory
+import com.plb.bwsr.lo.PLBMark
 import java.net.URISyntaxException
 
 class WebHelper(val callback: WebCallback) {

@@ -1,4 +1,4 @@
-package com.plb.bwsr
+package com.plb.bwsr.lo
 
 import android.app.Activity
 import android.content.Intent
@@ -8,10 +8,14 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
-import com.plb.bwsr.co.PLBa
-import com.plb.bwsr.co.PLBam
-import com.plb.bwsr.co.PLBap
+import com.plb.bwsr.co.AppConfig
+import com.plb.bwsr.dw.BaseActivity
+import com.plb.bwsr.co.PLBBroActivity
+import com.plb.bwsr.PLBMActivity
+import com.plb.bwsr.ho.PLBa
+import com.plb.bwsr.dw.PLBap
 import com.plb.bwsr.databinding.ActHomeBinding
+import com.plb.bwsr.po.PLBHActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -20,6 +24,7 @@ class PLBMainActivity : BaseActivity() {
     private lateinit var binding: ActHomeBinding
 
     private var actLauncher: ActivityResultLauncher<Intent>? = null
+    private var ad: PLBa? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -95,15 +100,16 @@ class PLBMainActivity : BaseActivity() {
 
     private fun loadAd() {
         launch {
-            val spba = PLBam.instance.create(PLBap.NATIVE)
+            val plba = PLBam.instance.create(PLBap.NATIVE)
             binding.adDef.isVisible = false
-            if (spba != null) {
+            if (plba != null) {
+                this@PLBMainActivity.ad = plba
                 withContext(Dispatchers.Main) {
                     val adViewBind = binding.adView
                     adViewBind.adViewRoot.isVisible = true
                     adViewBind.adViewRoot.onGlobalLayout {
                         val adView = adViewBind.adView
-                        spba.showNav {
+                        plba.showNav {
                             if (this == null) {
                                 adView.visibility = View.GONE
                             } else {
@@ -126,6 +132,12 @@ class PLBMainActivity : BaseActivity() {
                 }
             }
         }
+    }
+
+
+    override fun onDestroy() {
+        super.onDestroy()
+        this.ad?.onDestroy()
     }
 
 }
