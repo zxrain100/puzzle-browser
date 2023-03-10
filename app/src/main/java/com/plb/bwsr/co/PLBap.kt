@@ -1,13 +1,14 @@
 package com.plb.bwsr.co
 
 import android.util.Base64
-import com.plb.bwsr.AppConfig
 import com.plb.bwsr.RCHelper
 import org.json.JSONObject
 
 
 object PLBap {
+    //启动
     const val INDEX = "inter_l"
+    //主页
     const val HOME = "inter_h"
     const val NATIVE = "native"
 
@@ -60,6 +61,7 @@ object PLBap {
                     val t = when (obj2.optString("plb_type")) {
                         "nav" -> 0
                         "inter" -> 1
+                        "open" -> 2
                         else -> 1
                     }
                     au.add(PLBau(id, priority, t))
@@ -71,7 +73,6 @@ object PLBap {
             }
             return adReqList
         } catch (e: Exception) {
-            e.printStackTrace()
             return mutableListOf()
         }
     }

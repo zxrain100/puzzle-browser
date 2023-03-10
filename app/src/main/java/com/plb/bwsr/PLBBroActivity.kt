@@ -27,6 +27,7 @@ class PLBBroActivity : BaseActivity(), WebCallback, View.OnClickListener {
 
     private var ad: PLBa? = null
     private var loadingType = 0  //0:未加载，1：加载中
+    private var isHome = true
 
     private var actLauncher: ActivityResultLauncher<Intent>? = null
 
@@ -104,9 +105,11 @@ class PLBBroActivity : BaseActivity(), WebCallback, View.OnClickListener {
         } else {
             binding.webView.loadUrl("https://www.google.com/search?q=$str")
         }
+        isHome = false
     }
 
     private fun showHome() {
+        isHome = true
         if (binding.webPage.visibility == View.VISIBLE) {
             loadAd()
         }
@@ -157,17 +160,16 @@ class PLBBroActivity : BaseActivity(), WebCallback, View.OnClickListener {
             loadingType = 1
             binding.search.setImageResource(R.mipmap.cancel)
             binding.inputUrl.setText(url)
+            updatePreAndNextStatus()
         }
 
         updateFavIcon(url)
-
     }
 
     override fun onWebFinish(url: String) {
         binding.webProgress.isVisible = false
         loadingType = 0
         binding.search.setImageResource(R.mipmap.search)
-        updatePreAndNextStatus()
     }
 
     override fun onWebProgress(progress: Int) {
@@ -205,7 +207,9 @@ class PLBBroActivity : BaseActivity(), WebCallback, View.OnClickListener {
             binding.itemTwitter -> startLoad("https://www.twitter.com/")
 
             binding.pre -> {
-                updatePreAndNextStatus()
+                if (!isHome) {
+                    updatePreAndNextStatus()
+                }
                 if (binding.webPage.visibility == View.VISIBLE) {
                     if (binding.webView.canGoBack()) {
                         val m = binding.webView.copyBackForwardList()
@@ -222,7 +226,9 @@ class PLBBroActivity : BaseActivity(), WebCallback, View.OnClickListener {
                 }
             }
             binding.next -> {
-                updatePreAndNextStatus()
+                if (!isHome) {
+                    updatePreAndNextStatus()
+                }
                 if (binding.webView.canGoForward()) {
                     binding.webView.goForward()
                 }

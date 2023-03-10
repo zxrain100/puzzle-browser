@@ -3,6 +3,7 @@ package com.plb.bwsr.co
 import android.app.Activity
 import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.FullScreenContentCallback
+import com.google.android.gms.ads.appopen.AppOpenAd
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.nativead.NativeAd
 
@@ -12,6 +13,8 @@ class PLBa {
     private var exTime: Long = 0
     private var nav: NativeAd? = null
     private var inter: InterstitialAd? = null
+    private var open: AppOpenAd? = null
+
     private var closeListener: (() -> Unit)? = null
     private var isAva = true
     private var type: Int = 0
@@ -28,6 +31,12 @@ class PLBa {
         exTime = System.currentTimeMillis() + 60 * 60 * 1000
     }
 
+    constructor(open: AppOpenAd) {
+        this.type = 2
+        this.open = open
+        exTime = System.currentTimeMillis() + 4 * 60 * 60 * 1000
+    }
+
     private var mFullScreenContentCallback: FullScreenContentCallback =
         object : FullScreenContentCallback() {
             override fun onAdDismissedFullScreenContent() {
@@ -42,6 +51,7 @@ class PLBa {
 
             override fun onAdShowedFullScreenContent() {
                 inter = null
+                open = null
             }
         }
 
@@ -60,11 +70,19 @@ class PLBa {
 
     fun show(activity: Activity) {
         try {
-            if (inter == null) {
-                closeListener?.invoke()
+            if (type == 2) {
+                if (open == null) {
+                    closeListener?.invoke()
+                }
+                open?.fullScreenContentCallback = mFullScreenContentCallback
+                open?.show(activity)
+            } else {
+                if (inter == null) {
+                    closeListener?.invoke()
+                }
+                inter?.fullScreenContentCallback = mFullScreenContentCallback
+                inter?.show(activity)
             }
-            inter?.fullScreenContentCallback = mFullScreenContentCallback
-            inter?.show(activity)
 
         } catch (_: Exception) {
             closeListener?.invoke()
@@ -76,10 +94,13 @@ class PLBa {
      */
     fun isAva(): Boolean {
         when (type) {
-            1 -> if (nav == null) {
+            0 -> if (nav == null) {
                 return false
             }
-            0 -> if (inter == null) {
+            1 -> if (inter == null) {
+                return false
+            }
+            2 -> if (open == null) {
                 return false
             }
         }
@@ -91,6 +112,7 @@ class PLBa {
         nav?.destroy()
         inter = null
         nav = null
+        open = null
     }
 
 }

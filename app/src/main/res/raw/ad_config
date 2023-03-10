@@ -8,6 +8,11 @@
           "plb_id": "ca-app-pub-3940256099942544/1033173712",
           "plb_priority": 1,
           "plb_type": "inter"
+        },
+        {
+          "plb_id": "ca-app-pub-3940256099942544/3419835294",
+          "plb_priority": 2,
+          "plb_type": "open"
         }
       ]
     },

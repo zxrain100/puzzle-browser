@@ -2,6 +2,7 @@ package com.plb.bwsr.co
 
 import android.content.Context
 import com.google.android.gms.ads.*
+import com.google.android.gms.ads.appopen.AppOpenAd
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.google.android.gms.ads.nativead.NativeAdOptions
@@ -75,6 +76,7 @@ class PLBam {
                 when (plbau.type) {
                     0 -> crateNativeAd(key, plbau.id)
                     1 -> crateInterstitialAd(key, plbau.id)
+                    2 -> crateOpenAd(key, plbau.id)
                     else -> crateInterstitialAd(key, plbau.id)
                 }
             }
@@ -141,6 +143,33 @@ class PLBam {
                     it.resume(plba)
                 }
             })
+        }
+    }
+
+
+    private suspend fun crateOpenAd(key: String, id: String): PLBa {
+        return suspendCancellableCoroutine {
+            AppOpenAd.load(
+                context,
+                id,
+                AdRequest.Builder().build(),
+                AppOpenAd.APP_OPEN_AD_ORIENTATION_PORTRAIT,
+                object : AppOpenAd.AppOpenAdLoadCallback() {
+                    override fun onAdFailedToLoad(adError: LoadAdError) {
+                        super.onAdFailedToLoad(adError)
+                        it.resumeWithException(Exception(adError.code.toString()))
+                    }
+
+                    override fun onAdLoaded(p0: AppOpenAd) {
+                        super.onAdLoaded(p0)
+                        val plba = PLBa(p0)
+                        //之前有缓存的广告，先将之前的广告销毁
+                        PLBap.cacheList[key]?.onDestroy()
+                        PLBap.cacheList[key] = plba
+                        it.resume(plba)
+                    }
+                }
+            )
         }
     }
 
