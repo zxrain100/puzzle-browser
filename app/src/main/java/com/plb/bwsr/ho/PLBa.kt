@@ -20,13 +20,13 @@ class PLBa {
     private var type: Int = 0
 
     constructor(inter: InterstitialAd) {
-        this.type = 0
+        this.type = 1
         this.inter = inter
         exTime = System.currentTimeMillis() + 60 * 60 * 1000
     }
 
     constructor(nat: NativeAd) {
-        this.type = 1
+        this.type = 0
         this.nav = nat
         exTime = System.currentTimeMillis() + 60 * 60 * 1000
     }
